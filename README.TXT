@@ -1,3 +1,10 @@
+q3 OS based on mikeOS:
+
+the aim of this project is to create a MikeOS derivative that boots
+into a BASIC interpreter like Commodore BASIC or Thoroughbred/OS
+
+MikeOS readme:
+
 ==================================================================
 MikeOS -- Open source 16-bit operating system for x86 PCs
 Copyright (C) 2006 - 2019 MikeOS Developers -- see doc/LICENSE.TXT
