@@ -187,20 +187,20 @@ option_screen:
 	call os_dialog_box
 
 	cmp ax, 1			; If OK (option 0) chosen, start app selector
-	jne near app_selector
+	jne near start_monitor
 
 	call os_clear_screen		; Otherwise clean screen and start the CLI
-	call start_monitor
+	call start_basic
 
 	jmp option_screen		; Offer menu/CLI choice after CLI has exited
 
 
 	; Data for the above code...
 
-	os_init_msg		db 'Welcome to MikeOS', 0
+	os_init_msg		db 'Welcome to q3OS', 0
 	os_version_msg		db 'Version ', MIKEOS_VER, 0
 
-	dialog_string_1		db 'Thanks for trying out MikeOS!', 0
+	dialog_string_1		db 'Thanks for trying out q3OS!', 0
 	dialog_string_2		db 'Please select an interface: OK for the', 0
 	dialog_string_3		db 'program menu, Cancel for Monitor.', 0
 
@@ -249,6 +249,15 @@ app_selector:
 	mov ax, si
 	mov cx, 32768			; Where to load the program file
 	call os_load_file		; Load filename pointed to by AX
+
+start_basic:
+mov ax, test_basic_file
+mov cx, 32768
+call os_load_file
+
+mov ax, 32768
+mov si, 0
+call os_run_basic
 
 start_monitor:
 
@@ -352,6 +361,8 @@ not_bas_extension:
 
 	monitor_file_name	db 'MONITOR.BIN', 0
 
+	test_basic_file		db 'TEST.BAS', 0
+
 	bin_ext			db 'BIN'
 	bas_ext			db 'BAS'
 
@@ -371,9 +382,9 @@ not_bas_extension:
 
 	; Time and date formatting
 
-	fmt_12_24	db 0		; Non-zero = 24-hr format
+	fmt_12_24	db 1		; Non-zero = 24-hr format
 
-	fmt_date	db 0, '/'	; 0, 1, 2 = M/D/Y, D/M/Y or Y/M/D
+	fmt_date	db 2, '-'	; 0, 1, 2 = M/D/Y, D/M/Y or Y/M/D
 					; Bit 7 = use name for months
 					; If bit 7 = 0, second byte = separator character
 
