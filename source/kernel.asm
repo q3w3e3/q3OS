@@ -14,7 +14,6 @@
 	%DEFINE MIKEOS_VER 'q3'	; OS version number
 	%DEFINE MIKEOS_API_VER 17	; API version for programs to check
 
-
 	; This is the location in RAM for kernel disk operations, 24K
 	; after the point where the kernel has loaded; it's 8K in size,
 	; because external programs load after it at the 32K point:
@@ -191,7 +190,7 @@ option_screen:
 	jne near app_selector
 
 	call os_clear_screen		; Otherwise clean screen and start the CLI
-	call os_command_line
+	call start_monitor
 
 	jmp option_screen		; Offer menu/CLI choice after CLI has exited
 
@@ -203,9 +202,7 @@ option_screen:
 
 	dialog_string_1		db 'Thanks for trying out MikeOS!', 0
 	dialog_string_2		db 'Please select an interface: OK for the', 0
-	dialog_string_3		db 'program menu, Cancel for command line.', 0
-
-
+	dialog_string_3		db 'program menu, Cancel for Monitor.', 0
 
 app_selector:
 	mov ax, os_init_msg		; Draw main screen layout
@@ -252,6 +249,12 @@ app_selector:
 	mov ax, si
 	mov cx, 32768			; Where to load the program file
 	call os_load_file		; Load filename pointed to by AX
+
+start_monitor:
+
+mov ax, monitor_file_name
+mov cx, 32768
+call os_load_file
 
 
 execute_bin_program:
@@ -346,6 +349,8 @@ not_bas_extension:
 
 	autorun_bin_file_name	db 'AUTORUN.BIN', 0
 	autorun_bas_file_name	db 'AUTORUN.BAS', 0
+
+	monitor_file_name	db 'MONITOR.BIN', 0
 
 	bin_ext			db 'BIN'
 	bas_ext			db 'BAS'

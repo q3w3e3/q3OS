@@ -58,7 +58,7 @@ rm -rf tmp-loop
 
 mkdir tmp-loop && mount -o loop -t vfat disk_images/mikeos.flp tmp-loop && cp source/kernel.bin tmp-loop/
 
-cp programs/*.bin programs/*.bas programs/sample.pcx tmp-loop
+cp programs/*.bin programs/*.bas tmp-loop
 
 sleep 0.2
 
