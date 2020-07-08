@@ -7,6 +7,8 @@ _____________________
 
 # changed version to q3
 
+# future changes to be tracked with git
+
 4.6.1 (17 March 2019)
 ---------------------
 
